@@ -8,7 +8,7 @@
 module sdl_net;
 
 import bindbc.sdl.config;
-static if(bindSDLNet):
+version(none):
 import bindbc.sdl.codegen;
 
 alias SDLNet_version = SDL_version;

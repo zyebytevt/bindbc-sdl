@@ -8,7 +8,7 @@
 module sdl_image;
 
 import bindbc.sdl.config;
-static if(bindSDLImage):
+version(none):
 import bindbc.sdl.codegen;
 
 import sdl.error: SDL_GetError, SDL_SetError;

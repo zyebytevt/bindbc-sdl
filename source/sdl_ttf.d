@@ -8,7 +8,7 @@
 module sdl_ttf;
 
 import bindbc.sdl.config;
-static if(bindSDLTTF):
+version(none):
 import bindbc.sdl.codegen;
 
 import sdl.error: SDL_GetError, SDL_SetError;
