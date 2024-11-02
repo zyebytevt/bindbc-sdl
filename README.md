@@ -4,11 +4,10 @@
 
 Based on [this commit](https://github.com/libsdl-org/SDL/commit/78cc5c173404488d80751af226d1eaf67033bcc4), tagged `preview-3.1.6`.
 
-<div align="center" width="100%">
+<h1 align="center" width="100%">
 	<img alt="BindBC-SDL logo" width="50%" src="https://raw.githubusercontent.com/BindBC/bindbc-branding/master/logo_wide_sdl.png"/>
-</div>
+</h1>
 
-# BindBC-SDL
 This project provides a set of both static and dynamic bindings to
 [SDL (Simple DirectMedia Layer)](https://libsdl.org/) and its official extension libraries. They are compatible with `@nogc` and `nothrow`, and can be compiled with BetterC compatibility.
 
@@ -394,8 +393,3 @@ version SDL_MainUseCallbacks{
 ```
 > [!NOTE]\
 > This example code does **NOT** support unittests, and doesn't run any module constructors/destructors. Look at how DRuntime implements these features if you need them in your project.
-
-### `SDL_MainUnicode`
-TODO: expand this section
-
-Makes SDL's main use UCS-2 on applicable Microsoft platforms

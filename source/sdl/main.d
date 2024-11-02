@@ -52,6 +52,9 @@ version(SDL_MainUseCallbacks){
 	else version(MainAvailable) version = SDLEntryPoint;
 }
 
+version(ANSI){
+}else version = Unicode;
+
 enum makeSDLMain = (string argCountIden=null, string argArrayIden=null, string dynLoad=null, string body=null){
 	static if(staticBinding)
 		dynLoad = "";
@@ -95,7 +98,7 @@ alias PWSTR = wchar_t*;
 					else return true;
 				}else return false;
 			}()){
-				version(SDL_MainUnicode){
+				version(Unicode){
 					sdlMain ~= q{extern(C) int wmain(int argC, wchar_t** wArgV, wchar_t* wEnvP)};
 				}else{
 					sdlMain ~= q{extern(C) int main(int argC, char* argV)};
@@ -105,7 +108,7 @@ alias PWSTR = wchar_t*;
 } ~ "}\n";
 			}
 			
-			version(SDL_MainUnicode){
+			version(Unicode){
 				sdlMain ~= q{extern(System) int wWinMain(HINSTANCE hInst, HINSTANCE hPrev, PWSTR szCmdLine, int sw)};
 			}else{
 				sdlMain ~= q{extern(System) int WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw)};
