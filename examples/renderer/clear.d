@@ -24,12 +24,12 @@ SDL_Renderer* renderer = null;
 //This function runs once at startup.
 SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	if(!SDL_Init(SDL_InitFlags.video)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	if(!SDL_CreateWindowAndRenderer("examples/renderer/clear", 640, 480, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -46,12 +46,12 @@ SDL_AppResult SDL_AppEvent(void* appState, SDL_Event* event){
 
 //This function runs once per frame, and is the heart of the program.
 SDL_AppResult SDL_AppIterate(void* appState){
-	const double now = (cast(double)SDL_GetTicks()) / 1000.0; //convert from milliseconds to seconds.
+	const double now = (cast(double)SDL_GetTicks()) / 1_000.0; //convert from milliseconds to seconds.
 	//choose the colour for the frame we will draw. The sine wave trick makes it fade between colours smoothly.
 	const float red = cast(float)(0.5 + 0.5 * SDL_sin(now));
 	const float green = cast(float)(0.5 + 0.5 * SDL_sin(now + sdl.piD * 2 / 3));
 	const float blue = cast(float)(0.5 + 0.5 * SDL_sin(now + sdl.piD * 4 / 3));
-	SDL_SetRenderDrawColorFloat(renderer, red, green, blue, 1.0f); //new colour, full alpha.
+	SDL_SetRenderDrawColourFloat(renderer, red, green, blue, sdl.alphaOpaqueFloat); //new colour, full alpha.
 	
 	//clear the window to the draw colour.
 	SDL_RenderClear(renderer);

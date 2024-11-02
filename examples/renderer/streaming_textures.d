@@ -29,18 +29,18 @@ mixin(makeSDLMain(dynLoad: q{
 //This function runs once at startup.
 SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	if(!SDL_Init(SDL_InitFlags.video)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	if(!SDL_CreateWindowAndRenderer("examples/renderer/streaming-textures", windowWidth, windowHeight, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	texture = SDL_CreateTexture(renderer, SDL_PixelFormat.rgba8888, SDL_TextureAccess.streaming, textureSize, textureSize);
 	if(!texture){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create streaming texture!", SDL_GetError(), null);
+		SDL_Log("Couldn't create streaming texture: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	

@@ -32,18 +32,18 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	int devCount = 0;
 	
 	if(!SDL_Init(SDL_InitFlags.video | SDL_InitFlags.camera)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	if(!SDL_CreateWindowAndRenderer("examples/camera/read-and-draw", 640, 480, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	devices = SDL_GetCameras(&devCount);
 	if(devices is null){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't enumerate camera devices!", SDL_GetError(), window);
+		SDL_Log("Couldn't enumerate camera devices: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}else if(devCount == 0){
 		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't find any camera devices!", "Please connect a camera and try again.", window);
@@ -53,7 +53,7 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	camera = SDL_OpenCamera(devices[0], null); // just take the first thing we see in any format it wants.
 	SDL_free(devices);
 	if(camera is null){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't open camera!", SDL_GetError(), window);
+		SDL_Log("Couldn't open camera: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	

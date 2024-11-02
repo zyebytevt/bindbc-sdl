@@ -41,12 +41,12 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	char* bmpPath = null;
 	
 	if(!SDL_Init(SDL_InitFlags.video)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	if(!SDL_CreateWindowAndRenderer("examples/renderer/read-pixels", windowWidth, windowHeight, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -63,7 +63,7 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	SDL_asprintf(&bmpPath, "%s/../assets/sample.bmp", SDL_GetBasePath()); //allocate a string of the full file path
 	surface = SDL_LoadBMP(bmpPath);
 	if(!surface){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't load bitmap!", SDL_GetError(), null);
+		SDL_Log("Couldn't load bitmap: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -74,7 +74,7 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	
 	texture = SDL_CreateTextureFromSurface(renderer, surface);
 	if(!texture){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create static texture!", SDL_GetError(), null);
+		SDL_Log("Couldn't create static texture: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -136,7 +136,7 @@ SDL_AppResult SDL_AppIterate(void* appState){
 			SDL_DestroyTexture(convertedTexture);
 			convertedTexture = SDL_CreateTexture(renderer, SDL_PixelFormat.rgba8888, SDL_TextureAccess.streaming, surface.w, surface.h);
 			if(!convertedTexture){
-				SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't (re)create conversion texture!", SDL_GetError(), null);
+				SDL_Log("Couldn't (re)create conversion texture: %s", SDL_GetError());
 				return SDL_AppResult.failure;
 			}
 			convertedTextureWidth = surface.w;

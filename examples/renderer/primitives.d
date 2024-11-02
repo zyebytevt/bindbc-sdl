@@ -26,12 +26,12 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	int i;
 	
 	if(!SDL_Init(SDL_InitFlags.video)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	if(!SDL_CreateWindowAndRenderer("examples/renderer/primitives", 640, 480, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	

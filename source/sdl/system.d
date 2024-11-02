@@ -49,11 +49,23 @@ version(GDK){
 	alias XUser = XUserHandle*;
 }
 
+mixin(makeEnumBind(q{SDL_Sandbox}, members: (){
+	EnumMember[] ret = [
+		{{q{none},                q{SDL_SANDBOX_NONE}}, q{0}},
+		{{q{unknownContainer},    q{SDL_SANDBOX_UNKNOWN_CONTAINER}}},
+		{{q{flatpak},             q{SDL_SANDBOX_FLATPAK}}},
+		{{q{snap},                q{SDL_SANDBOX_SNAP}}},
+		{{q{macOS},               q{SDL_SANDBOX_MACOS}}},
+	];
+	return ret;
+}()));
+
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{void}, q{SDL_SetX11EventHook}, q{SDL_X11EventHook callback, void* userData}},
 		{q{bool}, q{SDL_IsTablet}, q{}},
 		{q{bool}, q{SDL_IsTV}, q{}},
+		{q{SDL_Sandbox}, q{SDL_GetSandbox}, q{}},
 		{q{void}, q{SDL_OnApplicationWillTerminate}, q{}},
 		{q{void}, q{SDL_OnApplicationDidReceiveMemoryWarning}, q{}},
 		{q{void}, q{SDL_OnApplicationWillEnterBackground}, q{}},

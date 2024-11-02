@@ -28,13 +28,13 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	SDL_AudioSpec spec;
 	
 	if(!SDL_Init(SDL_InitFlags.video | SDL_InitFlags.audio)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	//we don't _need_ a window for audio-only things but it's good policy to have one.
 	if(!SDL_CreateWindowAndRenderer("examples/audio/simple-playback", 640, 480, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -48,7 +48,7 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	spec.freq = 8_000;
 	stream = SDL_OpenAudioDeviceStream(SDL_AudioDevice.defaultPlayback, &spec, null, null);
 	if(!stream){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create audio stream!", SDL_GetError(), window);
+		SDL_Log("Couldn't create audio stream: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -85,7 +85,7 @@ SDL_AppResult SDL_AppIterate(void* appState){
 			*/
 			const float time = totalSamplesGenerated / 8_000.0f;
 			enum int sineFreq = 500; //run the wave at 500Hz
-			sample = SDL_sinf(6.283_185f * sineFreq * time) * 0.25f;
+			sample = SDL_sinf(6.283_185f * sineFreq * time) * 0.05f;
 			totalSamplesGenerated++;
 		}
 		

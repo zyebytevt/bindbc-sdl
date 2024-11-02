@@ -2,7 +2,7 @@
 
 ## NOTICE: SDL 3.2.0 has not been officially released yet. This documentation is being written as if it is. SDL 3.1.X will not be supported after 3.2.0 releases.
 
-Based on [this commit](https://github.com/libsdl-org/SDL/commit/e292d1f5ace469f718d7b6b4dec8c28e37dcaa0e).
+Based on [this commit](https://github.com/libsdl-org/SDL/commit/78cc5c173404488d80751af226d1eaf67033bcc4), tagged `preview-3.1.6`.
 
 <div align="center" width="100%">
 	<img alt="BindBC-SDL logo" width="50%" src="https://raw.githubusercontent.com/BindBC/bindbc-branding/master/logo_wide_sdl.png"/>

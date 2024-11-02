@@ -209,7 +209,7 @@ SDL_AppResult SDL_AppIterate(void* appState){
 	as = cast(AppState*)appState;
 	ctx = &as.snakeCtx;
 	r.w = r.h = snakeBlockSizeInPixels;
-	SDL_SetRenderDrawColour(as.renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColour(as.renderer, 0, 0, 0, sdl.alphaOpaque);
 	SDL_RenderClear(as.renderer);
 	foreach(CellPos i; 0..snakeGameWidth){
 		foreach(CellPos j; 0..snakeGameHeight){
@@ -218,13 +218,13 @@ SDL_AppResult SDL_AppIterate(void* appState){
 				continue;
 			setRectXY(&r, i, j);
 			if(ct == Cell.food)
-				SDL_SetRenderDrawColour(as.renderer, 80, 80, 255, 255);
+				SDL_SetRenderDrawColour(as.renderer, 80, 80, 255, sdl.alphaOpaque);
 			else /* body */
-				SDL_SetRenderDrawColour(as.renderer, 0, 128, 0, 255);
+				SDL_SetRenderDrawColour(as.renderer, 0, 128, 0, sdl.alphaOpaque);
 			SDL_RenderFillRect(as.renderer, &r);
 		}
 	}
-	SDL_SetRenderDrawColour(as.renderer, 255, 255, 0, 255); /*head*/
+	SDL_SetRenderDrawColour(as.renderer, 255, 255, 0, sdl.alphaOpaque); /*head*/
 	setRectXY(&r, ctx.headXPos, ctx.headYPos);
 	SDL_RenderFillRect(as.renderer, &r);
 	SDL_RenderPresent(as.renderer);
@@ -232,12 +232,16 @@ SDL_AppResult SDL_AppIterate(void* appState){
 }
 
 SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
+	if(!SDL_SetAppMetadata("Example Snake game", "1.0", "com.example.Snake")){
+		return SDL_AppResult.failure;
+	}
+	
 	if(!SDL_Init(SDL_InitFlags.video)){
 		return SDL_AppResult.failure;
 	}
 	
 	AppState* as = cast(AppState*)SDL_calloc(1, AppState.sizeof);
-	
+	if(!as) return SDL_AppResult.failure;
 	*appState = as;
 	
 	if(!SDL_CreateWindowAndRenderer("examples/game/snake", sdlWindowWidth, sdlWindowHeight, 0, &as.window, &as.renderer)){

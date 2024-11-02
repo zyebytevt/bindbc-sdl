@@ -18,6 +18,7 @@ pragma(inline,true) extern(C) nothrow @nogc{
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{bool}, q{SDL_SetError}, q{const(char)* fmt, ...}},
+		{q{bool}, q{SDL_SetErrorV}, q{const(char)* fmt, va_list ap}},
 		{q{bool}, q{SDL_OutOfMemory}, q{}},
 		{q{const(char)*}, q{SDL_GetError}, q{}},
 		{q{bool}, q{SDL_ClearError}, q{}},

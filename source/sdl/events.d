@@ -131,6 +131,11 @@ mixin(makeEnumBind(q{SDL_EventType}, q{uint}, members: (){
 		{{q{cameraDeviceDenied},            q{SDL_EVENT_CAMERA_DEVICE_DENIED}}},
 		{{q{renderTargetsReset},            q{SDL_EVENT_RENDER_TARGETS_RESET}},    q{0x2000}},
 		{{q{renderDeviceReset},             q{SDL_EVENT_RENDER_DEVICE_RESET}}},
+		{{q{renderDeviceLost},              q{SDL_EVENT_RENDER_DEVICE_LOST}}},
+		{{q{private0},                      q{SDL_EVENT_PRIVATE0}},                q{0x4000}},
+		{{q{private1},                      q{SDL_EVENT_PRIVATE1}}},
+		{{q{private2},                      q{SDL_EVENT_PRIVATE2}}},
+		{{q{private3},                      q{SDL_EVENT_PRIVATE3}}},
 		{{q{pollSentinel},                  q{SDL_EVENT_POLL_SENTINEL}},           q{0x7F00}},
 		{{q{user},                          q{SDL_EVENT_USER}},                    q{0x8000}},
 		{{q{last},                          q{SDL_EVENT_LAST}},                    q{0xFFFF}},
@@ -482,6 +487,12 @@ struct SDL_ClipboardEvent{
 	SDL_EventType type;
 	uint reserved;
 	ulong timestamp;
+	bool owner;
+	int nMIMETypes;
+	const(char)** mimeTypes;
+	
+	alias n_mime_types = nMIMETypes;
+	alias mime_types = mimeTypes;
 }
 
 struct SDL_SensorEvent{

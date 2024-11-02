@@ -143,7 +143,7 @@ extern(C) nothrow{
 	alias SDL_EGLIntArrayCallback = SDL_EGLint function(void* userData, SDL_EGLDisplay display, SDL_EGLConfig config);
 }
 
-mixin(makeEnumBind(q{SDL_GLAttr}, aliases: [q{SDL_GL}, q{SDL_GLattr}], members: (){
+mixin(makeEnumBind(q{SDL_GLAttr}, aliases: [q{SDL_GL}], members: (){
 	EnumMember[] ret = [
 		{{q{redSize},                     q{SDL_GL_RED_SIZE}}},
 		{{q{greenSize},                   q{SDL_GL_GREEN_SIZE}}},
@@ -177,7 +177,8 @@ mixin(makeEnumBind(q{SDL_GLAttr}, aliases: [q{SDL_GL}, q{SDL_GLattr}], members: 
 	return ret;
 }()));
 
-mixin(makeEnumBind(q{SDL_GLProfile}, aliases: [q{SDL_GLContextProfile}, q{SDL_GLprofile}], members: (){
+alias SDL_GLProfile_ = uint;
+mixin(makeEnumBind(q{SDL_GLProfile}, q{SDL_GLProfile_}, aliases: [q{SDL_GLContextProfile}], members: (){
 	EnumMember[] ret = [
 		{{q{core},             q{SDL_GL_CONTEXT_PROFILE_CORE}},             q{0x0001}},
 		{{q{compatibility},    q{SDL_GL_CONTEXT_PROFILE_COMPATIBILITY}},    q{0x0002}},
@@ -186,7 +187,8 @@ mixin(makeEnumBind(q{SDL_GLProfile}, aliases: [q{SDL_GLContextProfile}, q{SDL_GL
 	return ret;
 }()));
 
-mixin(makeEnumBind(q{SDL_GLContextFlag}, aliases: [q{SDL_GLcontextFlag}], members: (){
+alias SDL_GLContextFlag_ = uint;
+mixin(makeEnumBind(q{SDL_GLContextFlag}, q{SDL_GLContextFlag_}, members: (){
 	EnumMember[] ret = [
 		{{q{debugFlag},                q{SDL_GL_CONTEXT_DEBUG_FLAG}},                 q{0x0001}},
 		{{q{forwardCompatibleFlag},    q{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG}},    q{0x0002}},
@@ -196,7 +198,8 @@ mixin(makeEnumBind(q{SDL_GLContextFlag}, aliases: [q{SDL_GLcontextFlag}], member
 	return ret;
 }()));
 
-mixin(makeEnumBind(q{SDL_GLContextReleaseFlag}, aliases: [q{SDL_GLContextReleaseBehaviour}, q{SDL_GLContextReleaseBehavior}, q{SDL_GLcontextReleaseFlag}], members: (){
+alias SDL_GLContextReleaseFlag_ = uint;
+mixin(makeEnumBind(q{SDL_GLContextReleaseFlag}, q{SDL_GLContextReleaseFlag_}, aliases: [q{SDL_GLContextReleaseBehaviour}, q{SDL_GLContextReleaseBehavior}, q{SDL_GLcontextReleaseFlag}], members: (){
 	EnumMember[] ret = [
 		{{q{none},     q{SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE}},     q{0x0000}},
 		{{q{flush},    q{SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH}},    q{0x0001}},
@@ -204,7 +207,8 @@ mixin(makeEnumBind(q{SDL_GLContextReleaseFlag}, aliases: [q{SDL_GLContextRelease
 	return ret;
 }()));
 
-mixin(makeEnumBind(q{SDL_GLContextResetNotification}, aliases: [q{SDL_GLContextReset}], members: (){
+alias SDL_GLContextResetNotification_ = uint;
+mixin(makeEnumBind(q{SDL_GLContextResetNotification}, q{SDL_GLContextResetNotification_}, aliases: [q{SDL_GLContextReset}], members: (){
 	EnumMember[] ret = [
 		{{q{noNotification},    q{SDL_GL_CONTEXT_RESET_NO_NOTIFICATION}},    q{0x0000}},
 		{{q{loseContext},       q{SDL_GL_CONTEXT_RESET_LOSE_CONTEXT}},       q{0x0001}},
@@ -278,6 +282,7 @@ mixin(makeEnumBind(q{SDLProp_Window}, q{const(char)*}, members: (){
 		{{q{kmsDRMGBMDevicePointer},                  q{SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER}},                    q{"SDL.window.kmsdrm.gbm_dev"}},
 		{{q{cocoaWindowPointer},                      q{SDL_PROP_WINDOW_COCOA_WINDOW_POINTER}},                         q{"SDL.window.cocoa.window"}},
 		{{q{cocoaMetalViewTagNumber},                 q{SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER}},                  q{"SDL.window.cocoa.metal_view_tag"}},
+		{{q{openVROverlayID},                         q{SDL_PROP_WINDOW_OPENVR_OVERLAY_ID}},                            q{"SDL.window.openvr.overlay_id"}},
 		{{q{vivanteDisplayPointer},                   q{SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER}},                      q{"SDL.window.vivante.display"}},
 		{{q{vivanteWindowPointer},                    q{SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER}},                       q{"SDL.window.vivante.window"}},
 		{{q{vivanteSurfacePointer},                   q{SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER}},                      q{"SDL.window.vivante.surface"}},
@@ -423,8 +428,8 @@ mixin(joinFnBinds((){
 		{q{void}, q{SDL_GL_UnloadLibrary}, q{}},
 		{q{bool}, q{SDL_GL_ExtensionSupported}, q{const(char)* extension}},
 		{q{void}, q{SDL_GL_ResetAttributes}, q{}},
-		{q{bool}, q{SDL_GL_SetAttribute}, q{SDL_GLattr attr, int value}},
-		{q{bool}, q{SDL_GL_GetAttribute}, q{SDL_GLattr attr, int* value}},
+		{q{bool}, q{SDL_GL_SetAttribute}, q{SDL_GLAttr attr, int value}},
+		{q{bool}, q{SDL_GL_GetAttribute}, q{SDL_GLAttr attr, int* value}},
 		{q{SDL_GLContext}, q{SDL_GL_CreateContext}, q{SDL_Window* window}},
 		{q{bool}, q{SDL_GL_MakeCurrent}, q{SDL_Window* window, SDL_GLContext context}},
 		{q{SDL_Window*}, q{SDL_GL_GetCurrentWindow}, q{}},

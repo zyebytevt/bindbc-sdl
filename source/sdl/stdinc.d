@@ -215,6 +215,7 @@ mixin(joinFnBinds((){
 		{q{int}, q{SDL_strncasecmp}, q{const(char)* str1, const(char)* str2, size_t maxLen}},
 		{q{char*}, q{SDL_strpbrk}, q{const(char)* str, const(char)* breakSet}},
 		{q{uint}, q{SDL_StepUTF8}, q{const(char)** pStr, size_t* psLen}},
+		{q{uint}, q{SDL_StepBackUTF8}, q{const(char)* start, const(char)** pStr}},
 		{q{char*}, q{SDL_UCS4ToUTF8}, q{uint codePoint, char* dst}},
 		{q{int}, q{SDL_sscanf}, q{const(char)* text, const(char)* fmt, ...}},
 		{q{int}, q{SDL_vsscanf}, q{const(char)* text, const(char)* fmt, va_list ap}},

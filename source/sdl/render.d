@@ -173,6 +173,8 @@ mixin(makeEnumBind(q{SDL_RendererVSync}, q{SDL_RendererVSync_}, members: (){
 	return ret;
 }()));
 
+enum SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE = 8;
+
 mixin(joinFnBinds((){
 	FnBind[] ret = [
 		{q{int}, q{SDL_GetNumRenderDrivers}, q{}},
@@ -261,6 +263,7 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_AddVulkanRenderSemaphores}, q{SDL_Renderer* renderer, uint waitStageMask, long waitSemaphore, long signalSemaphore}},
 		{q{bool}, q{SDL_SetRenderVSync}, q{SDL_Renderer* renderer, SDL_RendererVSync_ vsync}},
 		{q{bool}, q{SDL_GetRenderVSync}, q{SDL_Renderer* renderer, SDL_RendererVSync_* vsync}},
+		{q{bool}, q{SDL_RenderDebugText}, q{SDL_Renderer* renderer, float x, float y, const(char)* str}},
 	];
 	return ret;
 }()));

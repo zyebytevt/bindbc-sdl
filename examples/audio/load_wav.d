@@ -38,20 +38,20 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	char* wavPath = null;
 	
 	if(!SDL_Init(SDL_InitFlags.video | SDL_InitFlags.audio)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't initialise SDL!", SDL_GetError(), null);
+		SDL_Log("Couldn't initialise SDL: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	//we don't _need_ a window for audio-only things but it's good policy to have one.
 	if(!SDL_CreateWindowAndRenderer("examples/audio/load-wav", 640, 480, 0, &window, &renderer)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create window/renderer!", SDL_GetError(), null);
+		SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
 	//Load the .wav file from wherever the app is being run from.
 	SDL_asprintf(&wavPath, "%s/../assets/sample.wav", SDL_GetBasePath()); //allocate a string of the full file path
 	if(!SDL_LoadWAV(wavPath, &spec, &wavData, &wavDataLen)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't load .wav file!", SDL_GetError(), null);
+		SDL_Log("Couldn't load .wav file: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	
@@ -60,11 +60,11 @@ SDL_AppResult SDL_AppInit(void** appState, int argC, char** argV){
 	//Create our audio stream in the same format as the .wav file. It'll convert to what the audio hardware wants.
 	stream = SDL_OpenAudioDeviceStream(SDL_AudioDevice.defaultPlayback, &spec, null, null);
 	if(!stream){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't create audio stream!", SDL_GetError(), window);
+		SDL_Log("Couldn't create audio stream: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
-	if(!SDL_SetAudioStreamGain(stream, 0.25f)){
-		SDL_ShowSimpleMessageBox(SDL_MessageBoxFlags.error, "Couldn't set the audio stream's gain!", SDL_GetError(), window);
+	if(!SDL_SetAudioStreamGain(stream, 0.05f)){
+		SDL_Log("Couldn't set the audio stream's gain: %s", SDL_GetError());
 		return SDL_AppResult.failure;
 	}
 	

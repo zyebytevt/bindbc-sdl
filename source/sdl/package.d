@@ -135,6 +135,7 @@ static if(dStyleEnums){
 	alias alphaTransparentFloat = SDL_ALPHA_TRANSPARENT_FLOAT;
 	//sdl.render
 	alias softwareRenderer = SDL_SOFTWARE_RENDERER;
+	alias debugTextFontCharacterSize = SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE;
 	//sdl.sensor
 	alias standardGravity = SDL_STANDARD_GRAVITY;
 	//sdl.stdinc

@@ -68,6 +68,7 @@ mixin(joinFnBinds((){
 		{q{void}, q{SDL_LogCritical}, q{int category, const(char)* fmt, ...}},
 		{q{void}, q{SDL_LogMessage}, q{int category, SDL_LogPriority priority, const(char)* fmt, ...}},
 		{q{void}, q{SDL_LogMessageV}, q{int category, SDL_LogPriority priority, const(char)* fmt, va_list ap}},
+		{q{SDL_LogOutputFunction}, q{SDL_GetDefaultLogOutputFunction}, q{}},
 		{q{void}, q{SDL_GetLogOutputFunction}, q{SDL_LogOutputFunction* callback, void** userData}},
 		{q{void}, q{SDL_SetLogOutputFunction}, q{SDL_LogOutputFunction callback, void* userData}},
 	];

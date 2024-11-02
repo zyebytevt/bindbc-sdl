@@ -40,6 +40,7 @@ mixin(joinFnBinds((){
 		{q{ulong}, q{SDL_GetPerformanceFrequency}, q{}},
 		{q{void}, q{SDL_Delay}, q{uint ms}},
 		{q{void}, q{SDL_DelayNS}, q{ulong ns}},
+		{q{void}, q{SDL_DelayPrecise}, q{ulong ns}},
 		{q{SDL_TimerID}, q{SDL_AddTimer}, q{uint interval, SDL_TimerCallback callback, void* userData}},
 		{q{SDL_TimerID}, q{SDL_AddTimerNS}, q{ulong interval, SDL_NSTimerCallback callback, void* userData}},
 		{q{bool}, q{SDL_RemoveTimer}, q{SDL_TimerID id}},
