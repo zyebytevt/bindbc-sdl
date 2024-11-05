@@ -42,8 +42,8 @@ version(Microsoft){
 			void _endthreadex(uint);
 		}
 	}
-	alias SDL_BeginThreadFunction = _beginthreadex;
-	alias SDL_EndThreadFunction = _endthreadex;
+	enum SDL_BeginThreadFunction = &_beginthreadex;
+	enum SDL_EndThreadFunction = &_endthreadex;
 }else{
 	enum SDL_BeginThreadFunction = null;
 	enum SDL_EndThreadFunction = null;
