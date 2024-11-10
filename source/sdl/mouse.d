@@ -50,7 +50,7 @@ mixin(makeEnumBind(q{SDL_MouseWheelDirection}, aliases: [q{SDL_MouseWheel}], mem
 	return ret;
 }()));
 
-mixin(makeEnumBind(q{SDL_MouseButton}, aliases: [q{SDL_Button}], members: (){
+mixin(makeEnumBind(q{SDL_MouseButton}, q{ubyte}, aliases: [q{SDL_Button}], members: (){
 	EnumMember[] ret = [
 		{{q{left},    q{SDL_BUTTON_LEFT}},    q{1}},
 		{{q{middle},  q{SDL_BUTTON_MIDDLE}},  q{2}},
