@@ -317,7 +317,8 @@ For convenience, `sdl.main` (equivalent to `SDL_main.h`) is imported by default.
 If you want SDL to replace your entry point, you will have to wrap your main function's parameter names & body in a mixin of `makeSDLMain`. Doing so is the equivalent of using `#include <SDL3/SDL_main.h>` in C *without* defining `SDL_MAIN_NOIMPL`.
 ```d
 enum dynLoadSDL = q{
-	if(!loadSDL()){
+	LoadMsg ret = loadSDL();
+	if(ret != LoadMsg.success){
 		import core.stdc.stdio, bindbc.loader;
 		foreach(error; bindbc.loader.errors){
 			printf("%s\n", error.message);
@@ -347,7 +348,8 @@ Here's an example that initialises & terminates DRuntime, and has basic exceptio
 import core.runtime, core.stdc.stdio;
 
 mixin(makeSDLMain(dynLoad: q{
-	if(!loadSDL()){
+	LoadMsg ret = loadSDL();
+	if(ret != LoadMsg.success){
 		import core.stdc.stdio, bindbc.loader;
 		foreach(error; bindbc.loader.errors){
 			printf("%s\n", error.message);

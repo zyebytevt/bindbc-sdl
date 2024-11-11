@@ -16,7 +16,8 @@ int totalSamplesGenerated = 0;
 
 extern(C) nothrow:
 mixin(makeSDLMain(dynLoad: q{
-	if(!loadSDL()){
+	LoadMsg ret = loadSDL();
+	if(ret != LoadMsg.success){
 		import core.stdc.stdio, bindbc.loader;
 		foreach(error; bindbc.loader.errors){
 			printf("%s\n", error.message);
