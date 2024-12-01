@@ -196,7 +196,7 @@ bool loadLib(){
 ## Binding-specific changes
 Enums are available both in their original C-style `UPPER_SNAKE_CASE` form, and as the D-style `PascalCase.camelCase`. Both variants are enabled by default, but can be selectively chosen using the version identifiers `SDL_C_Enums_Only` or `SDL_D_Enums_Only` respectively.
 
-> [!NOTE]\
+> [!TIP]\
 > The version identifiers `BindBC_C_Enums_Only` and `BindBC_D_Enums_Only` can be used to configure all of the applicable _official_ BindBC packages used in your program. Package-specific version identifiers override this.
 
 `camelCase`d variants are available for struct fields using `snake_case` or `lowercase`.
@@ -211,7 +211,7 @@ BindBC-SDL has the following configurations:
 
 For projects that don't use dub, if BindBC-SDL is compiled for static bindings then the version identifier `BindSDL_Static` must be passed to your compiler when building your project.
 
-> [!NOTE]\
+> [!TIP]\
 > The version identifier `BindBC_Static` can be used to configure all of the _official_ BindBC packages used in your program. (i.e. those maintained in [the BindBC GitHub organisation](https://github.com/BindBC)) Some third-party BindBC packages may support it as well.
 
 ### Dynamic bindings
@@ -237,14 +237,7 @@ When linking with the static libraries, there is no runtime dependency on SDL. T
 ## Library Versions
 These are the supported versions of each SDL_* library, along with the corresponding version identifiers to add to your dub configuration or pass to the compiler.
 
-> [!NOTE]\
-> If you have `SDL_THREAD_SAFETY_ANALYSIS` support enabled in SDL, you may use version identifier `SDL_ThreadSafetyAnalysis`.
-
-> [!NOTE]\
-> It is necessary to specify only a single version identifier per library. For example, `SDL_Image_3_0` by itself will activate the SDL_image binding.
-
-> [!NOTE]\
-> All even-numbered SDL/SDL_* versions are releases, while all odd-numbered versions are pre-releases—which are not for general use and are therefore not supported by BindBC-SDL.
+It is necessary to specify only a single version identifier per library. For example, `SDL_Image_3_0` by itself will activate the SDL_image binding.
 
 <details>
 	<summary><h3>SDL versions</h3></summary>
@@ -258,7 +251,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 <details><summary><h3>SDL_image versions</h3></summary>
 
-| Version |Version identifier| Public API changed |
+| Version |Version identifier| Public API updated |
 |---------|------------------|--------------------|
 | 3.0.0   | `SDL_Image_3_0`  |                    |
 
@@ -266,7 +259,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 <details><summary><h3>SDL_mixer versions</h3></summary>
 
-| Version |Version identifier| Public API changed |
+| Version |Version identifier| Public API updated |
 |---------|------------------|--------------------|
 | 3.0.0   | `SDL_Mixer_3_0`  |                    |
 
@@ -274,7 +267,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 <details><summary><h3>SDL_net versions</h3></summary>
 
-| Version |Version identifier| Public API changed |
+| Version |Version identifier| Public API updated |
 |---------|------------------|--------------------|
 | 3.0.0   | `SDL_Net_3_0`    |                    |
 
@@ -282,7 +275,7 @@ These are the supported versions of each SDL_* library, along with the correspon
 
 <details><summary><h3>SDL_ttf versions</h3></summary>
 
-| Version |Version identifier| Public API changed |
+| Version |Version identifier| Public API updated |
 |---------|------------------|--------------------|
 | 3.0.0   | `SDL_TTF_3_0`    |                    |
 
@@ -291,9 +284,6 @@ These are the supported versions of each SDL_* library, along with the correspon
 ## Special platforms
 Some platforms do not have [pre-defined versions in D](https://dlang.org/spec/version.html#predefined-versions), meaning that BindBC-SDL has to use custom version identifiers for them.
 If you intend to compile for any of these platforms, please add the corresponding version identifier(s) in your dub recipe's `versions` list, or supply them directly to the compiler.
-
-> [!NOTE]\
-> If you're building on Wayland and you have X11 support disabled in SDL, please add version identifier `SDL_NoX11`.
 
 | Platform                       | Version identifier |
 |--------------------------------|--------------------|
@@ -332,13 +322,13 @@ mixin(makeSDLMain(q{argC}, q{argV}, dynLoadSDL, dynLoadSDL~q{
 	return 0;
 }));
 ```
-> [!IMPORTANT]\
-> `makeSDLMain`'s third argument (`dynLoad`) specifies what code to load SDL (and handle loading errors) when using the dynamic bindings. It can be left blank as long as you ONLY use the static bindings. This code will be prepended to your main function in cases where SDL does not override it.
-
 > [!WARNING]\
-> When using this feature, your provided main function will always be `extern(C) nothrow`, take `(int, char**)` as its parameters, and must return `int`. Having an `extern(C)` main means that you need to handle some tasks (e.g. runtime initialisation & termination) that are normally taken care of for you by D's runtime.
-> See the [`extern(C)` main spec](https://dlang.org/spec/function.html#betterc-main).
+> When using this feature, your provided main function will always be `extern(C) nothrow`, take `(int, char**)` as its parameters, and must return `int`. If you're not using BetterC, then an `extern(C)` main function means that DRuntime will not be initialised, and so if you want to use any DRuntime features then you will have to research & re-implement what DRuntime usually does for you before calling your main function. For this reason, using SDL's entry point with DRuntime is not advised for inexperienced programmers.
+>
+> To learn more, see the [`extern(C) main()` spec](https://dlang.org/spec/function.html#betterc-main).
 
+> [!IMPORTANT]\
+> When using dynamic bindings, `makeSDLMain`'s third argument (`dynLoad`) must be a string with code to load SDL (and handle any loader errors). It can be left blank as long as you ONLY use the static bindings. Unless SDL overrides your main function or you're using static bindings, the code in `dynLoad` will be prepended to your main function.
 
 ### Callback entry points
 If you want to use the callback entry points (or 'main callbacks'), then you also need to use version identifier `SDL_MainUseCallbacks`. When using callback functions, only the `dynLoad` parameter of `makeSDLMain` is used. As a side-effect, this means that you can safely write code in your main body that depends on `SDL_MainUseCallbacks` not being in-use.
@@ -394,4 +384,4 @@ version SDL_MainUseCallbacks{
 }
 ```
 > [!NOTE]\
-> This example code does **NOT** support unittests, and doesn't run any module constructors/destructors. Look at how DRuntime implements these features if you need them in your project.
+> This example code does **NOT** support unittests, doesn't run any module constructors/destructors, and does not support `--DRT` command-line parameters. Look at how DRuntime implements these features if you need them (or any other DRuntime features) in your project.
