@@ -251,6 +251,7 @@ mixin(joinFnBinds((){
 		{q{bool}, q{SDL_RenderTextureRotated}, q{SDL_Renderer* renderer, SDL_Texture* texture, const(SDL_FRect)* srcRect, const(SDL_FRect)* dstRect, double angle, const(SDL_FPoint)* centre, SDL_FlipMode flip}},
 		{q{bool}, q{SDL_RenderTextureTiled}, q{SDL_Renderer* renderer, SDL_Texture* texture, const(SDL_FRect)* srcRect, float scale, const(SDL_FRect)* dstRect}},
 		{q{bool}, q{SDL_RenderTexture9Grid}, q{SDL_Renderer* renderer, SDL_Texture* texture, const(SDL_FRect)* srcRect, float leftWidth, float rightWidth, float topHeight, float bottomHeight, float scale, const(SDL_FRect)* dstRect}},
+		{q{bool}, q{SDL_RenderTextureAffine}, q{SDL_Renderer* renderer, SDL_Texture* texture, const(SDL_FRect)* srcRect, const(SDL_FPoint)* origin, const(SDL_FPoint)* right, const(SDL_FPoint)* down}},
 		{q{bool}, q{SDL_RenderGeometry}, q{SDL_Renderer* renderer, SDL_Texture* texture, const(SDL_Vertex)* vertices, int numVertices, const(int)* indices, int numIndices}},
 		{q{bool}, q{SDL_RenderGeometryRaw}, q{SDL_Renderer* renderer, SDL_Texture* texture, const(float)* xy, int xyStride, const(SDL_FColour)* colour, int colourStride, const(float)* uv, int uvStride, int numVertices, const(void)* indices, int numIndices, int sizeIndices}},
 		{q{SDL_Surface*}, q{SDL_RenderReadPixels}, q{SDL_Renderer* renderer, const(SDL_Rect)* rect}},
