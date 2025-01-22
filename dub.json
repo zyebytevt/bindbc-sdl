@@ -4,7 +4,10 @@
 	"authors": ["Aya Partridge", "Mike Parker"],
 	"license": "BSL-1.0",
 	
-	"dependencies": {"bindbc-common": "~>1.0"},
+	"dependencies": {"bindbc-common": {
+			"repository": "git+https://github.com/BindBC/bindbc-common.git",
+			"version": "f92971c"
+		}},
 	"targetType": "staticLibrary",
 	"targetPath": "lib",
 	"targetName": "BindBC_SDL",
